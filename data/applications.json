@@ -1,0 +1,206 @@
+[
+  {
+    "id": "app_1",
+    "name": "김철수",
+    "email": "chulsoo@example.com",
+    "jobTitle": "AI Robotics Engineer",
+    "status": "interview",
+    "appliedAt": "2026-01-20T10:00:00Z",
+    "score": 92,
+    "insights": [
+      "High technical fit",
+      "Strong problem solving"
+    ],
+    "resume": "#",
+    "coverLetter": "안녕하세요..."
+  },
+  {
+    "id": "app_2",
+    "name": "이영희",
+    "email": "younghee@example.com",
+    "jobTitle": "Data Scientist",
+    "status": "pending",
+    "appliedAt": "2026-01-22T14:30:00Z",
+    "score": 85,
+    "insights": [
+      "Strong math background",
+      "Good Python skills"
+    ],
+    "resume": "#",
+    "coverLetter": "데이터 분석에 자신있습니다."
+  },
+  {
+    "id": "app_3",
+    "name": "박지민",
+    "email": "jimin@example.com",
+    "jobTitle": "AI Robotics Engineer",
+    "status": "reviewed",
+    "appliedAt": "2026-01-25T09:15:00Z",
+    "score": 78,
+    "insights": [
+      "Relevant internship",
+      "Good teamwork"
+    ],
+    "resume": "#",
+    "coverLetter": "열심히 하겠습니다."
+  },
+  {
+    "id": "app_4",
+    "name": "최민석",
+    "email": "minseok@example.com",
+    "jobTitle": "Mechanical Architect",
+    "status": "rejected",
+    "appliedAt": "2026-01-15T11:20:00Z",
+    "score": 65,
+    "insights": [
+      "Lack of specialized experience"
+    ],
+    "resume": "#",
+    "coverLetter": "지원을 희망합니다."
+  },
+  {
+    "id": "fallback_vco2kq",
+    "name": "카리나",
+    "email": "meanzero123@gmail.com",
+    "jobTitle": "Robotics AI Researcher",
+    "resume": "https://www.linkedin.com/in/minyeong-jeong-093883250/",
+    "coverLetter": "",
+    "status": "screening",
+    "appliedAt": "2026-01-29T06:57:40.789Z"
+  },
+  {
+    "id": "fallback_2h35hw",
+    "name": "차은우",
+    "email": "imjoeyu@naver.com",
+    "jobTitle": "Robotics AI Researcher",
+    "resume": "https://www.linkedin.com/in/minyeong-jeong-093883250/",
+    "coverLetter": "",
+    "status": "applied",
+    "appliedAt": "2026-01-29T07:16:48.478Z"
+  },
+  {
+    "id": "fallback_oxmo2",
+    "name": "test",
+    "email": "meanzero123@gmail.com",
+    "jobTitle": "TEST_PM",
+    "status": "interview",
+    "appliedAt": "2026-01-30T04:12:50.897Z",
+    "job_id": "job_ks4v2g",
+    "payload": {
+      "name": "test",
+      "email": "meanzero123@gmail.com",
+      "phone": "+82 10-1111-2222",
+      "resume": "https://www.linkedin.com/in/minyeong-jeong-093883250/",
+      "coverLetter": "test",
+      "jobTitle": "TEST_PM",
+      "job_id": "job_ks4v2g"
+    }
+  },
+  {
+    "id": "fallback_vmnhgd",
+    "name": "장원영",
+    "email": "meanzero123@sookmyung.ac.kr",
+    "jobTitle": "AI TesterAI Tester",
+    "status": "interview",
+    "appliedAt": "2026-01-30T04:24:44.369Z",
+    "job_id": "job_p5ehn",
+    "payload": {
+      "name": "장원영",
+      "email": "meanzero123@sookmyung.ac.kr",
+      "phone": "+82 10-1111-2222",
+      "resume": "https://imjoeyu.tistory.com/",
+      "coverLetter": "",
+      "jobTitle": "AI TesterAI Tester",
+      "job_id": "job_p5ehn"
+    }
+  },
+  {
+    "id": "fallback_9m81sm",
+    "name": "Test User",
+    "email": "meanzero123@sookmyung.ac.kr",
+    "jobTitle": "Edge AI Engineer",
+    "status": "applied",
+    "appliedAt": "2026-01-30T05:39:56.679Z",
+    "job_id": "job_36wwy4",
+    "payload": {
+      "name": "Test User",
+      "email": "meanzero123@sookmyung.ac.kr",
+      "phone": "010-1234-5678",
+      "resume": "https://example.com/resume",
+      "coverLetter": "I am very interested in the Edge AI Engineer role at Antigravity Corp.",
+      "jobTitle": "Edge AI Engineer",
+      "job_id": "job_36wwy4"
+    }
+  },
+  {
+    "id": "fallback_6plapn",
+    "name": "Anonymous",
+    "email": "No Email",
+    "jobTitle": "Edge AI Engineer",
+    "status": "applied",
+    "appliedAt": "2026-01-30T06:05:40.002Z",
+    "job_id": "job_36wwy4",
+    "payload": {
+      "name": "",
+      "email": "",
+      "phone": "",
+      "resume": "",
+      "coverLetter": "",
+      "jobTitle": "Edge AI Engineer",
+      "job_id": "job_36wwy4"
+    }
+  },
+  {
+    "id": "fallback_ehm6bk",
+    "name": "Test User",
+    "email": "meanzero123@sookmyung.ac.kr",
+    "jobTitle": "Unknown",
+    "status": "applied",
+    "appliedAt": "2026-01-30T06:11:17.343Z",
+    "job_id": "job_36wwy4",
+    "payload": {
+      "job_id": "job_36wwy4",
+      "name": "Test User",
+      "email": "meanzero123@sookmyung.ac.kr",
+      "phone": "010-1234-5678",
+      "resume_link": "https://example.com/resume",
+      "cover_letter": "Final test attempt"
+    }
+  },
+  {
+    "id": "fallback_4c01g8",
+    "name": "차은우",
+    "email": "imjoeyu@naver.com",
+    "jobTitle": "Autonomous Systems Engineer",
+    "status": "applied",
+    "appliedAt": "2026-01-30T07:31:06.103Z",
+    "job_id": "3",
+    "payload": {
+      "name": "차은우",
+      "email": "imjoeyu@naver.com",
+      "phone": "01093994519",
+      "resume": "https://www.linkedin.com/in/minyeong-jeong-093883250/",
+      "coverLetter": "",
+      "jobTitle": "Autonomous Systems Engineer",
+      "job_id": "3"
+    }
+  },
+  {
+    "id": "fallback_g3la9q",
+    "name": "장원영",
+    "email": "imjoeyu@naver.com",
+    "jobTitle": "Autonomous Systems Engineer",
+    "status": "applied",
+    "appliedAt": "2026-01-30T07:32:50.930Z",
+    "job_id": "3",
+    "payload": {
+      "name": "장원영",
+      "email": "imjoeyu@naver.com",
+      "phone": "010-9399-4519",
+      "resume": "https://www.linkedin.com/in/minyeong-jeong-093883250/",
+      "coverLetter": "",
+      "jobTitle": "Autonomous Systems Engineer",
+      "job_id": "3"
+    }
+  }
+]
