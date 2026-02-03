@@ -1,25 +1,49 @@
+'use client'
+
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Rocket } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+
+const NAV_ITEMS = [
+    { href: '/experience', label: 'Experience' },
+    { href: '/careers', label: 'Careers' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
+]
 
 export function Header() {
+    const pathname = usePathname()
+
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-                    <div className="p-1.5 bg-blue-600 rounded-lg text-white">
-                        <Rocket size={20} />
-                    </div>
-                    <span>Antigravity<span className="text-blue-600">Corp</span></span>
+        <header className="fixed top-0 z-50 w-full bg-[#FFFDF9]/90 backdrop-blur-md">
+            <div className="container mx-auto flex h-20 items-center justify-between px-6">
+                {/* Logo */}
+                <Link
+                    href="/"
+                    className="text-lg font-medium tracking-tight text-stone-900 hover:text-stone-600 transition-colors"
+                >
+                    Golden Hours
                 </Link>
 
-                <nav className="flex items-center gap-6 text-sm font-medium">
-                    <Link href="/company" className="transition-colors hover:text-blue-600">Company</Link>
-                    <Link href="/jobs" className="transition-colors hover:text-blue-600">Jobs</Link>
-                    <Link href="/culture" className="transition-colors hover:text-blue-600">Culture</Link>
-                    <Link href="/jobs">
-                        <Button variant="primary" size="sm">View Openings</Button>
-                    </Link>
+                {/* Navigation */}
+                <nav className="flex items-center gap-8">
+                    {NAV_ITEMS.map((item) => {
+                        const isActive = pathname === item.href
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`
+                                    text-sm font-medium transition-colors
+                                    ${isActive
+                                        ? 'text-stone-900'
+                                        : 'text-stone-500 hover:text-stone-900'
+                                    }
+                                `}
+                            >
+                                {item.label}
+                            </Link>
+                        )
+                    })}
                 </nav>
             </div>
         </header>

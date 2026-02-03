@@ -1,51 +1,82 @@
 import Link from 'next/link'
-import { Rocket } from 'lucide-react'
 
 export function Footer() {
     return (
-        <footer className="border-t bg-[#fafafa]">
-            <div className="container mx-auto px-4 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-                            <Rocket size={20} className="text-blue-600" />
-                            <span>Antigravity<span className="text-blue-600">Corp</span></span>
-                        </div>
-                        <p className="text-sm text-gray-500 font-light leading-relaxed">
-                            Pioneering the next era of humanity through intelligent robotics and universal mobility solutions.
+        <footer className="bg-[#FFFDF9] border-t border-stone-100">
+            <div className="container mx-auto px-6 py-16">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+                    {/* Brand */}
+                    <div className="space-y-4">
+                        <Link
+                            href="/"
+                            className="text-lg font-medium tracking-tight text-stone-900"
+                        >
+                            Golden Hours
+                        </Link>
+                        <p className="text-sm text-stone-500 font-light leading-relaxed max-w-xs">
+                            Designing work systems that help teams run better,
+                            while creating calmer experiences for people.
                         </p>
                     </div>
 
-                    <div>
-                        <h3 className="font-bold text-gray-900 mb-6 uppercase tracking-widest text-xs">Company</h3>
-                        <ul className="space-y-3 text-sm text-gray-500 font-light">
-                            <li><Link href="/company" className="hover:text-blue-600 transition-colors">Our Vision</Link></li>
-                            <li><Link href="/culture" className="hover:text-blue-600 transition-colors">Culture</Link></li>
-                            <li><Link href="/jobs" className="hover:text-blue-600 transition-colors">Careers</Link></li>
-                        </ul>
-                    </div>
+                    {/* Navigation */}
+                    <div className="flex gap-16">
+                        <div>
+                            <h3 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                Navigate
+                            </h3>
+                            <ul className="space-y-3 text-sm text-stone-600 font-light">
+                                <li>
+                                    <Link href="/experience" className="hover:text-stone-900 transition-colors">
+                                        Experience
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/careers" className="hover:text-stone-900 transition-colors">
+                                        Careers
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/about" className="hover:text-stone-900 transition-colors">
+                                        About
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
 
-                    <div>
-                        <h3 className="font-bold text-gray-900 mb-6 uppercase tracking-widest text-xs">Resources</h3>
-                        <ul className="space-y-3 text-sm text-gray-500 font-light">
-                            <li><Link href="/contact" className="hover:text-blue-600 transition-colors">Contact</Link></li>
-                            <li><Link href="/privacy" className="hover:text-blue-600 transition-colors">Privacy Policy</Link></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 className="font-bold text-gray-900 mb-6 uppercase tracking-widest text-xs">Innovation</h3>
-                        <ul className="space-y-3 text-sm text-gray-500 font-light">
-                            <li><a href="#" className="hover:text-blue-600 transition-colors">Mobility Hub</a></li>
-                            <li><a href="#" className="hover:text-blue-600 transition-colors">Robotics Lab</a></li>
-                        </ul>
+                        <div>
+                            <h3 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                Connect
+                            </h3>
+                            <ul className="space-y-3 text-sm text-stone-600 font-light">
+                                <li>
+                                    <Link href="/contact" className="hover:text-stone-900 transition-colors">
+                                        Contact
+                                    </Link>
+                                </li>
+                                <li>
+                                    <a
+                                        href="mailto:hello@goldenhours.com"
+                                        className="hover:text-stone-900 transition-colors"
+                                    >
+                                        Email
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div className="mt-16 pt-8 border-t border-gray-100 text-center text-xs text-gray-400 font-light tracking-widest uppercase">
-                    © {new Date().getFullYear()} Antigravity Corp. Progress for Humanity.
+
+                {/* Bottom */}
+                <div className="mt-16 pt-8 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p className="text-xs text-stone-400 font-light">
+                        © {new Date().getFullYear()} Golden Hours
+                    </p>
+                    <p className="text-xs text-stone-400 font-light">
+                        Making work feel good.
+                    </p>
                 </div>
             </div>
         </footer>
     )
 }
-
