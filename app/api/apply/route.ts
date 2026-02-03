@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server'
 import { sendEmail, getEmailTemplate } from '@/lib/email'
 
+/**
+ * @deprecated 이 엔드포인트는 향후 제거될 예정입니다.
+ * 대신 /api/applications (POST)를 사용하세요.
+ *
+ * 마이그레이션 가이드:
+ * - 기존: POST /api/apply { name, email, jobTitle, job_id }
+ * - 신규: POST /api/applications { name, email, jobTitle, job_id }
+ */
 export async function POST(req: Request) {
+    // Deprecation 경고 로그
+    console.warn('⚠️ [DEPRECATED] /api/apply is deprecated. Use /api/applications instead.')
+
     try {
         const body = await req.json()
         const { name, email, jobTitle, job_id } = body

@@ -4,10 +4,10 @@ import { sendEmail, getEmailTemplate } from '@/lib/email'
 
 export async function POST(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = params
+        const { id } = await params
         const body = await req.json()
         const { eventType, force = false } = body // interview_invite, rejected, hired
 
