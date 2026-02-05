@@ -17,14 +17,21 @@ export default function JobDetailPage() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch('/api/admin/jobs')
+        setLoading(true)
+        fetch('/api/jobs')
             .then(res => res.json())
             .then(data => {
-                const allJobs = Array.isArray(data) ? [...data, ...ALL_JOBS] : ALL_JOBS
-                const found = allJobs.find((j: any) => j.id === params.id)
+                const allJobs = Array.isArray(data) ? data : ALL_JOBS
+                // Merge with ALL_JOBS if not present (simple dedupe by ID if needed, but here simple find is ok)
+                let found = allJobs.find((j: any) => j.id === params.id)
+
+                if (!found) {
+                    found = ALL_JOBS.find(j => j.id === params.id)
+                }
                 setJob(found)
             })
-            .catch(() => {
+            .catch((err) => {
+                console.error('Failed to fetch jobs', err)
                 setJob(ALL_JOBS.find(j => j.id === params.id))
             })
             .finally(() => setLoading(false))
@@ -56,6 +63,16 @@ export default function JobDetailPage() {
             </div>
         )
     }
+
+    // 문자열을 배열로 변환하는 헬퍼 함수
+    const parseList = (data: string | string[] | undefined): string[] => {
+        if (!data) return []
+        if (Array.isArray(data)) return data
+        return data.split('\n').map(s => s.trim()).filter(s => s.length > 0)
+    }
+
+    const responsibilities = parseList(job.responsibilities)
+    const requirements = parseList(job.requirements)
 
     return (
         <div className="flex min-h-screen flex-col font-sans bg-[#FFFDF9]">
@@ -107,13 +124,13 @@ export default function JobDetailPage() {
                                     </div>
                                 )}
 
-                                {job.responsibilities && job.responsibilities.length > 0 && (
+                                {responsibilities.length > 0 && (
                                     <div>
                                         <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
                                             What you'll do
                                         </h2>
                                         <ul className="space-y-3">
-                                            {job.responsibilities.map((item: string, index: number) => (
+                                            {responsibilities.map((item: string, index: number) => (
                                                 <li key={index} className="flex items-start gap-3 text-stone-600 font-light">
                                                     <span className="text-stone-300 mt-1">—</span>
                                                     <span>{item}</span>
@@ -123,13 +140,13 @@ export default function JobDetailPage() {
                                     </div>
                                 )}
 
-                                {job.requirements && job.requirements.length > 0 && (
+                                {requirements.length > 0 && (
                                     <div>
                                         <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
                                             What we're looking for
                                         </h2>
                                         <ul className="space-y-3">
-                                            {job.requirements.map((item: string, index: number) => (
+                                            {requirements.map((item: string, index: number) => (
                                                 <li key={index} className="flex items-start gap-3 text-stone-600 font-light">
                                                     <span className="text-stone-300 mt-1">—</span>
                                                     <span>{item}</span>

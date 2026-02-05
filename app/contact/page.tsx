@@ -61,7 +61,7 @@ export default function ContactPage() {
                             {/* Left - Contact Details */}
                             <div className="space-y-12">
                                 <div>
-                                    <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                    <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-4">
                                         Email
                                     </h2>
                                     <a
@@ -73,7 +73,7 @@ export default function ContactPage() {
                                 </div>
 
                                 <div>
-                                    <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                    <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-4">
                                         For careers
                                     </h2>
                                     <a
@@ -85,7 +85,7 @@ export default function ContactPage() {
                                 </div>
 
                                 <div>
-                                    <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                    <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-4">
                                         Location
                                     </h2>
                                     <p className="text-lg text-stone-600 font-light leading-relaxed">
@@ -181,10 +181,10 @@ export default function ContactPage() {
                 </section>
 
                 {/* FAQ Teaser */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
                         <div className="max-w-2xl">
-                            <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-6">
+                            <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-8">
                                 Common questions
                             </h2>
                             <div className="space-y-8">

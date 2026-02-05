@@ -1,7 +1,6 @@
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 const VALUES = [
     {
@@ -45,11 +44,11 @@ export default function AboutPage() {
                 </section>
 
                 {/* Story */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                             <div>
-                                <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-6">
+                                <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-6">
                                     Our story
                                 </h2>
                             </div>
@@ -76,9 +75,9 @@ export default function AboutPage() {
                 </section>
 
                 {/* Values */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
-                        <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-16">
+                        <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-16">
                             What we believe
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
@@ -97,37 +96,35 @@ export default function AboutPage() {
                 </section>
 
                 {/* CTA */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                            <div className="space-y-4">
-                                <h2 className="text-2xl font-medium text-stone-900">
+                            <div className="space-y-6">
+                                <h2 className="text-3xl font-medium text-stone-900">
                                     Work with us
                                 </h2>
-                                <p className="text-stone-500 font-light">
+                                <p className="text-lg text-stone-500 font-light">
                                     Let's talk about how we can help your team.
                                 </p>
                                 <Link
                                     href="/contact"
-                                    className="inline-flex items-center gap-2 text-stone-900 font-medium hover:gap-3 transition-all duration-300"
+                                    className="inline-flex items-center gap-3 h-12 px-6 bg-stone-900 hover:bg-stone-800 text-white rounded-full font-medium transition-all duration-300 hover:scale-105"
                                 >
-                                    Get in touch
-                                    <ArrowRight size={18} />
+                                    Get in touch ✉️
                                 </Link>
                             </div>
-                            <div className="space-y-4">
-                                <h2 className="text-2xl font-medium text-stone-900">
+                            <div className="space-y-6">
+                                <h2 className="text-3xl font-medium text-stone-900">
                                     Join our team
                                 </h2>
-                                <p className="text-stone-500 font-light">
+                                <p className="text-lg text-stone-500 font-light">
                                     We're always looking for thoughtful people.
                                 </p>
                                 <Link
                                     href="/careers"
-                                    className="inline-flex items-center gap-2 text-stone-900 font-medium hover:gap-3 transition-all duration-300"
+                                    className="inline-flex items-center gap-3 h-12 px-6 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-medium transition-all duration-300"
                                 >
-                                    View open roles
-                                    <ArrowRight size={18} />
+                                    View open roles ✨
                                 </Link>
                             </div>
                         </div>

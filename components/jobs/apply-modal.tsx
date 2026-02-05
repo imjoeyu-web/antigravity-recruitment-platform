@@ -27,10 +27,15 @@ export function ApplyModal({ jobId, jobTitle, isOpen, onClose }: ApplyModalProps
         setStatus('submitting')
 
         try {
-            const response = await fetch('/api/apply', {
+            const response = await fetch('/api/applications', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...formData, jobTitle, job_id: jobId })
+                body: JSON.stringify({
+                    ...formData,
+                    jobTitle,
+                    job_id: jobId,
+                    source: 'Web Application'
+                })
             })
 
             if (response.ok) {

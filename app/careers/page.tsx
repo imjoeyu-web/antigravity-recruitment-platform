@@ -13,7 +13,7 @@ export default function CareersPage() {
     const [jobs, setJobs] = useState<any[]>([])
 
     useEffect(() => {
-        fetch('/api/admin/jobs')
+        fetch('/api/jobs')
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data) && data.length > 0) {
@@ -103,10 +103,10 @@ export default function CareersPage() {
                 </section>
 
                 {/* Culture CTA */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
                         <div className="max-w-2xl">
-                            <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-6">
+                            <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-8">
                                 Life at Golden Hours
                             </h2>
                             <p className="text-2xl md:text-3xl text-stone-900 font-light leading-relaxed mb-8">

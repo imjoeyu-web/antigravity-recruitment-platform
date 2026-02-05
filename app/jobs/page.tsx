@@ -14,7 +14,7 @@ export default function JobsPage() {
     const [jobs, setJobs] = useState<any[]>([])
 
     useEffect(() => {
-        fetch('/api/admin/jobs')
+        fetch('/api/jobs')
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data) && data.length > 0) {

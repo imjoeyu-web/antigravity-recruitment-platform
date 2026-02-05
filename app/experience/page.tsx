@@ -1,6 +1,5 @@
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
-import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 const SERVICES = [
@@ -47,9 +46,9 @@ export default function ExperiencePage() {
                 </section>
 
                 {/* Services */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
-                        <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-16">
+                        <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-16">
                             What we do
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
@@ -68,9 +67,9 @@ export default function ExperiencePage() {
                 </section>
 
                 {/* Approach */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
-                        <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-16">
+                        <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-16">
                             Our approach
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8">
@@ -88,21 +87,20 @@ export default function ExperiencePage() {
                 </section>
 
                 {/* CTA */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-32 border-t border-stone-100">
                     <div className="container mx-auto px-6">
                         <div className="max-w-2xl">
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-stone-900 mb-6">
+                            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-stone-900 mb-6">
                                 Ready to make work feel good?
                             </h2>
-                            <p className="text-lg text-stone-500 font-light mb-8">
+                            <p className="text-xl text-stone-500 font-light mb-10">
                                 Let's talk about how we can help your team work better.
                             </p>
                             <Link
                                 href="/contact"
-                                className="inline-flex items-center gap-2 text-stone-900 font-medium hover:gap-3 transition-all duration-300"
+                                className="inline-flex items-center gap-3 h-14 px-8 bg-stone-900 hover:bg-stone-800 text-white rounded-full font-medium transition-all duration-300 hover:scale-105"
                             >
-                                Get in touch
-                                <ArrowRight size={18} />
+                                Get in touch ✉️
                             </Link>
                         </div>
                     </div>

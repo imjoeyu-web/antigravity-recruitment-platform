@@ -33,7 +33,29 @@ CREATE TABLE IF NOT EXISTS applications (
 );
 
 -- ==========================================
--- 2. notification_logs 테이블 생성
+-- 2. jobs 테이블 생성
+-- ==========================================
+CREATE TABLE IF NOT EXISTS jobs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+    title TEXT NOT NULL,
+    department TEXT NOT NULL,
+    description TEXT,
+    responsibilities TEXT, -- 담당 업무 (줄바꿈으로 구분된 목록)
+    requirements TEXT, -- 자격 요건 (줄바꿈으로 구분된 목록)
+    status TEXT DEFAULT 'open' NOT NULL, -- 'open', 'closed'
+    location TEXT,
+    employment_type TEXT -- 'full-time', 'part-time', 'contract', 'internship'
+);
+
+-- RLS 활성화
+ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;
+
+-- 인덱스
+CREATE INDEX IF NOT EXISTS idx_jobs_status ON jobs (status);
+
+-- ==========================================
+-- 3. notification_logs 테이블 생성
 -- ==========================================
 CREATE TABLE IF NOT EXISTS notification_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -51,7 +73,7 @@ CREATE TABLE IF NOT EXISTS notification_logs (
 CREATE INDEX IF NOT EXISTS idx_notification_logs_application_id ON notification_logs (application_id);
 
 -- ==========================================
--- 2. 성능 향상을 위한 인덱스 추가 (선택사항)
+-- 4. 성능 향상을 위한 인덱스 추가 (선택사항)
 -- ==========================================
 -- 이메일 검색이 잦을 경우 대비
 CREATE INDEX IF NOT EXISTS idx_applications_email ON applications (email);
@@ -59,7 +81,7 @@ CREATE INDEX IF NOT EXISTS idx_applications_email ON applications (email);
 CREATE INDEX IF NOT EXISTS idx_applications_status ON applications (status);
 
 -- ==========================================
--- 3. RLS (Row Level Security) 설정
+-- 5. RLS (Row Level Security) 설정
 -- ==========================================
 -- MVP 단계이므로 RLS를 활성화하고 모든 접근을 제한한 뒤,
 -- 서버 사이드에서 service_role 키(Admin)로만 접근하도록 설정합니다.

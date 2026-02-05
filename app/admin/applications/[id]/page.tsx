@@ -12,10 +12,12 @@ import {
     XCircle,
     Clock,
     ExternalLink,
-    Target,
-    Zap
+    Phone,
+    Send,
+    UserCheck,
+    UserX,
+    MessageSquare
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Application } from '@/lib/storage'
 
 export default function ApplicantDetailPage() {
@@ -24,6 +26,8 @@ export default function ApplicantDetailPage() {
     const [app, setApp] = useState<Application | null>(null)
     const [job, setJob] = useState<any>(null)
     const [loading, setLoading] = useState(true)
+    const [actionLoading, setActionLoading] = useState(false)
+    const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null)
 
     useEffect(() => {
         fetchData()
@@ -38,7 +42,6 @@ export default function ApplicantDetailPage() {
             if (foundApp) {
                 setApp(foundApp)
 
-                // Fetch job info if job_id exists
                 const jobId = foundApp.job_id || (foundApp.payload as any)?.job_id
                 if (jobId) {
                     const jobsRes = await fetch('/api/admin/jobs')
@@ -54,154 +57,306 @@ export default function ApplicantDetailPage() {
         }
     }
 
+    // 상태 변경 (올바른 API 경로 사용)
     const handleStatusChange = async (newStatus: string) => {
         if (!app) return
+        setActionLoading(true)
+        setNotification(null)
+
         try {
-            const res = await fetch('/api/applications', {
+            const res = await fetch(`/api/admin/applications/${app.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: app.id, status: newStatus })
+                body: JSON.stringify({ status: newStatus })
             })
+
+            const data = await res.json()
+
             if (res.ok) {
                 setApp({ ...app, status: newStatus as any })
+
+                // 알림 트리거 여부에 따른 메시지
+                if (data.notification_triggered) {
+                    if (data.notification_failed) {
+                        setNotification({ type: 'error', message: `상태가 ${newStatus}로 변경되었지만 이메일 발송에 실패했습니다.` })
+                    } else {
+                        setNotification({ type: 'success', message: `상태가 ${newStatus}로 변경되고 이메일이 발송되었습니다.` })
+                    }
+                } else {
+                    setNotification({ type: 'success', message: `상태가 ${newStatus}로 변경되었습니다.` })
+                }
+            } else {
+                setNotification({ type: 'error', message: data.error || '상태 변경에 실패했습니다.' })
             }
         } catch (e) {
             console.error(e)
+            setNotification({ type: 'error', message: '네트워크 오류가 발생했습니다.' })
+        } finally {
+            setActionLoading(false)
         }
     }
 
-    if (loading) return <div className="p-20 text-center">Loading applicant details...</div>
-    if (!app) return <div className="p-20 text-center">Applicant not found.</div>
+    // 수동 이메일 발송
+    const handleSendEmail = async () => {
+        if (!app) return
+        setActionLoading(true)
+        setNotification(null)
+
+        try {
+            const res = await fetch(`/api/admin/applications/${app.id}/notify`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ event_type: app.status === 'interview' ? 'interview_invite' : app.status })
+            })
+
+            const data = await res.json()
+
+            if (res.ok && data.success) {
+                setNotification({ type: 'success', message: '이메일이 성공적으로 발송되었습니다.' })
+            } else {
+                setNotification({ type: 'error', message: data.error || '이메일 발송에 실패했습니다.' })
+            }
+        } catch (e) {
+            console.error(e)
+            setNotification({ type: 'error', message: '네트워크 오류가 발생했습니다.' })
+        } finally {
+            setActionLoading(false)
+        }
+    }
+
+    if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center text-gray-700">Loading...</div>
+    if (!app) return <div className="min-h-screen bg-gray-50 flex items-center justify-center text-gray-700">Applicant not found.</div>
 
     const payload = app.payload || {}
-    const score = app.score || (payload as any).score || 0
-    const insights = app.insights || (payload as any).insights || []
+
+    const statusConfig: Record<string, { color: string, bg: string, label: string }> = {
+        applied: { color: 'text-gray-700', bg: 'bg-gray-100', label: '지원 완료' },
+        screening: { color: 'text-yellow-700', bg: 'bg-yellow-100', label: '서류 검토 중' },
+        interview: { color: 'text-blue-700', bg: 'bg-blue-100', label: '면접 진행' },
+        hired: { color: 'text-green-700', bg: 'bg-green-100', label: '최종 합격' },
+        rejected: { color: 'text-red-700', bg: 'bg-red-100', label: '불합격' },
+    }
+
+    const currentStatus = statusConfig[app.status] || statusConfig.applied
 
     return (
-        <div className="min-h-screen bg-gray-50/50 p-6 md:p-12">
-            <div className="max-w-5xl mx-auto">
-                <button
-                    onClick={() => router.back()}
-                    className="flex items-center gap-2 text-gray-500 hover:text-blue-600 mb-8 transition-colors text-sm font-medium"
-                >
-                    <ArrowLeft size={16} /> Back to Dashboard
-                </button>
+        <div className="min-h-screen bg-gray-50">
+            {/* Header */}
+            <div className="bg-white border-b sticky top-0 z-10">
+                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+                    <button
+                        onClick={() => router.back()}
+                        className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium"
+                    >
+                        <ArrowLeft size={18} /> 목록으로
+                    </button>
+                    <div className={`px-4 py-1.5 rounded-full text-sm font-bold ${currentStatus.bg} ${currentStatus.color}`}>
+                        {currentStatus.label}
+                    </div>
+                </div>
+            </div>
+
+            <div className="max-w-6xl mx-auto px-6 py-8">
+                {/* Notification */}
+                {notification && (
+                    <div className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
+                        notification.type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'
+                    }`}>
+                        {notification.type === 'success' ? <CheckCircle size={20} /> : <XCircle size={20} />}
+                        {notification.message}
+                    </div>
+                )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Main Info */}
-                    <div className="lg:col-span-2 space-y-8">
-                        <header className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-                            <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-                                <div className="flex gap-5">
-                                    <div className="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
-                                        {app.name.charAt(0)}
-                                    </div>
-                                    <div>
-                                        <h1 className="text-3xl font-bold text-gray-900">{app.name}</h1>
-                                        <div className="flex flex-wrap items-center gap-4 mt-2 text-gray-500">
-                                            <div className="flex items-center gap-1.5 flex-shrink-0">
-                                                <Mail size={16} /> {app.email}
+                    {/* Main Content */}
+                    <div className="lg:col-span-2 space-y-6">
+                        {/* Profile Card */}
+                        <div className="bg-white rounded-2xl border p-8">
+                            <div className="flex items-start gap-5">
+                                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-bold">
+                                    {app.name.charAt(0)}
+                                </div>
+                                <div className="flex-1">
+                                    <h1 className="text-2xl font-bold text-gray-900 mb-3">{app.name}</h1>
+                                    <div className="space-y-2 text-gray-700">
+                                        <div className="flex items-center gap-2">
+                                            <Mail size={16} className="text-gray-500" />
+                                            <span>{app.email}</span>
+                                        </div>
+                                        {(payload as any).phone && (
+                                            <div className="flex items-center gap-2">
+                                                <Phone size={16} className="text-gray-500" />
+                                                <span>{(payload as any).phone}</span>
                                             </div>
-                                            <div className="flex items-center gap-1.5 flex-shrink-0">
-                                                <Tag size={16} /> {job?.title || (payload as any).jobTitle || 'General Application'}
-                                            </div>
+                                        )}
+                                        <div className="flex items-center gap-2">
+                                            <Tag size={16} className="text-gray-500" />
+                                            <span>{job?.title || (payload as any).jobTitle || 'General Application'}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Calendar size={16} className="text-gray-500" />
+                                            <span>{new Date(app.created_at || (app as any).appliedAt).toLocaleDateString('ko-KR')}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex gap-2">
-                                    <select
-                                        value={app.status}
-                                        onChange={(e) => handleStatusChange(e.target.value)}
-                                        className="bg-gray-100 border-none rounded-xl px-4 py-2 text-sm font-bold text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
-                                    >
-                                        <option value="applied">APPLIED</option>
-                                        <option value="screening">SCREENING</option>
-                                        <option value="interview">INTERVIEW</option>
-                                        <option value="hired">HIRED</option>
-                                        <option value="rejected">REJECTED</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </header>
-
-                        <section className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
-                            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <FileText size={20} className="text-blue-600" /> Application Details
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Resume / Portfolio</h3>
-                                    <a
-                                        href={payload.resume || '#'}
-                                        target="_blank"
-                                        className="flex items-center gap-2 text-blue-600 font-medium hover:underline"
-                                    >
-                                        View Document <ExternalLink size={14} />
-                                    </a>
-                                </div>
-                                <div>
-                                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Applied Date</h3>
-                                    <div className="flex items-center gap-2 text-gray-700 font-medium">
-                                        <Calendar size={16} className="text-gray-400" />
-                                        {new Date(app.created_at || (app as any).appliedAt).toLocaleString()}
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Cover Letter / Message</h3>
-                                <div className="bg-gray-50 p-6 rounded-2xl text-gray-700 leading-relaxed whitespace-pre-line text-sm border border-gray-100/50">
-                                    {payload.coverLetter || "No cover letter provided."}
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                    {/* Sidebar Insights */}
-                    <div className="space-y-8">
-                        <div className="bg-gradient-to-br from-indigo-600 to-blue-700 p-8 rounded-3xl text-white shadow-lg shadow-blue-200">
-                            <div className="flex items-center gap-2 mb-6 opacity-90">
-                                <Zap size={20} />
-                                <span className="text-xs font-bold uppercase tracking-widest">AI Talent Insight</span>
-                            </div>
-                            <div className="text-center mb-8">
-                                <div className="text-6xl font-black mb-2">{score}</div>
-                                <div className="text-sm font-medium opacity-80 uppercase tracking-widest">Match Score</div>
-                            </div>
-                            <div className="space-y-4">
-                                <h3 className="text-xs font-bold opacity-70 uppercase tracking-widest">Key Success Factors</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {insights.length > 0 ? insights.map((insight: string, idx: number) => (
-                                        <span key={idx} className="bg-white/20 px-3 py-1.5 rounded-xl text-xs font-medium backdrop-blur-sm">
-                                            {insight}
-                                        </span>
-                                    )) : (
-                                        <span className="text-sm opacity-60 italic">No automated insights available.</span>
-                                    )}
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Process Milestones</h3>
-                            <div className="space-y-6 relative before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100">
-                                <div className="flex gap-4 relative">
-                                    <div className="w-4 h-4 rounded-full bg-green-500 border-4 border-white shadow-sm z-10"></div>
-                                    <div>
-                                        <p className="text-sm font-bold text-gray-900">Application Received</p>
-                                        <p className="text-xs text-gray-400">Automated System • {new Date(app.created_at || (app as any).appliedAt).toLocaleDateString()}</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-4 relative opacity-50">
-                                    <div className="w-4 h-4 rounded-full bg-gray-200 border-4 border-white shadow-sm z-10"></div>
-                                    <div>
-                                        <p className="text-sm font-bold text-gray-900">Initial Screening</p>
-                                        <p className="text-xs text-gray-400">Waiting for review</p>
-                                    </div>
-                                </div>
+                        {/* Resume / Portfolio */}
+                        <div className="bg-white rounded-2xl border p-8">
+                            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <FileText size={20} className="text-blue-600" />
+                                이력서 / 포트폴리오
+                            </h2>
+                            {(payload as any).resume ? (
+                                <a
+                                    href={(payload as any).resume}
+                                    target="_blank"
+                                    className="inline-flex items-center gap-2 px-4 py-3 bg-blue-50 text-blue-700 rounded-xl font-medium hover:bg-blue-100 transition-colors"
+                                >
+                                    <ExternalLink size={16} />
+                                    문서 보기
+                                </a>
+                            ) : (
+                                <p className="text-gray-600">제출된 이력서가 없습니다.</p>
+                            )}
+                        </div>
+
+                        {/* Cover Letter */}
+                        <div className="bg-white rounded-2xl border p-8">
+                            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <MessageSquare size={20} className="text-blue-600" />
+                                자기소개
+                            </h2>
+                            <div className="bg-gray-50 p-6 rounded-xl text-gray-700 leading-relaxed whitespace-pre-line">
+                                {(payload as any).coverLetter || "자기소개가 작성되지 않았습니다."}
                             </div>
-                            <Button className="w-full mt-8 gap-2" variant="outline">
-                                <Mail size={16} /> Send Email
-                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Sidebar - Actions */}
+                    <div className="space-y-6">
+                        {/* Quick Actions */}
+                        <div className="bg-white rounded-2xl border p-6">
+                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">
+                                채용 결정
+                            </h3>
+                            <div className="space-y-3">
+                                <button
+                                    onClick={() => handleStatusChange('interview')}
+                                    disabled={actionLoading || app.status === 'interview'}
+                                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold transition-all ${
+                                        app.status === 'interview'
+                                            ? 'bg-blue-100 text-blue-700 cursor-default'
+                                            : 'bg-blue-600 text-white hover:bg-blue-700'
+                                    }`}
+                                >
+                                    <Clock size={18} />
+                                    면접 진행
+                                </button>
+                                <button
+                                    onClick={() => handleStatusChange('hired')}
+                                    disabled={actionLoading || app.status === 'hired'}
+                                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold transition-all ${
+                                        app.status === 'hired'
+                                            ? 'bg-green-100 text-green-700 cursor-default'
+                                            : 'bg-green-600 text-white hover:bg-green-700'
+                                    }`}
+                                >
+                                    <UserCheck size={18} />
+                                    최종 합격
+                                </button>
+                                <button
+                                    onClick={() => handleStatusChange('rejected')}
+                                    disabled={actionLoading || app.status === 'rejected'}
+                                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold transition-all ${
+                                        app.status === 'rejected'
+                                            ? 'bg-red-100 text-red-700 cursor-default'
+                                            : 'bg-red-600 text-white hover:bg-red-700'
+                                    }`}
+                                >
+                                    <UserX size={18} />
+                                    불합격 처리
+                                </button>
+                            </div>
+                            {actionLoading && (
+                                <div className="mt-4 text-center text-sm text-gray-700 font-medium">
+                                    처리 중...
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Status Change */}
+                        <div className="bg-white rounded-2xl border p-6">
+                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">
+                                상태 직접 변경
+                            </h3>
+                            <select
+                                value={app.status}
+                                onChange={(e) => handleStatusChange(e.target.value)}
+                                disabled={actionLoading}
+                                className="w-full bg-gray-100 border-none rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="applied">지원 완료</option>
+                                <option value="screening">서류 검토 중</option>
+                                <option value="interview">면접 진행</option>
+                                <option value="hired">최종 합격</option>
+                                <option value="rejected">불합격</option>
+                            </select>
+                        </div>
+
+                        {/* Manual Email */}
+                        <div className="bg-white rounded-2xl border p-6">
+                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">
+                                이메일 발송
+                            </h3>
+                            <p className="text-sm text-gray-700 mb-4">
+                                현재 상태({currentStatus.label})에 맞는 이메일을 수동으로 발송합니다.
+                            </p>
+                            <button
+                                onClick={handleSendEmail}
+                                disabled={actionLoading || !['interview', 'hired', 'rejected'].includes(app.status)}
+                                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                <Send size={18} />
+                                이메일 발송
+                            </button>
+                            {!['interview', 'hired', 'rejected'].includes(app.status) && (
+                                <p className="text-xs text-gray-600 mt-2 text-center">
+                                    면접/합격/불합격 상태에서만 발송 가능
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Timeline */}
+                        <div className="bg-white rounded-2xl border p-6">
+                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">
+                                진행 이력
+                            </h3>
+                            <div className="space-y-4">
+                                <div className="flex gap-3">
+                                    <div className="w-3 h-3 rounded-full bg-green-500 mt-1.5"></div>
+                                    <div>
+                                        <p className="text-sm font-semibold text-gray-900">지원서 접수</p>
+                                        <p className="text-xs text-gray-600">
+                                            {new Date(app.created_at || (app as any).appliedAt).toLocaleString('ko-KR')}
+                                        </p>
+                                    </div>
+                                </div>
+                                {app.status !== 'applied' && (
+                                    <div className="flex gap-3">
+                                        <div className={`w-3 h-3 rounded-full mt-1.5 ${
+                                            app.status === 'hired' ? 'bg-green-500' :
+                                            app.status === 'rejected' ? 'bg-red-500' :
+                                            'bg-blue-500'
+                                        }`}></div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-gray-900">{currentStatus.label}</p>
+                                            <p className="text-xs text-gray-600">현재 상태</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
