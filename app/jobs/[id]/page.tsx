@@ -22,7 +22,6 @@ export default function JobDetailPage() {
             .then(res => res.json())
             .then(data => {
                 const allJobs = Array.isArray(data) ? data : ALL_JOBS
-                // Merge with ALL_JOBS if not present (simple dedupe by ID if needed, but here simple find is ok)
                 let found = allJobs.find((j: any) => j.id === params.id)
 
                 if (!found) {
@@ -39,10 +38,10 @@ export default function JobDetailPage() {
 
     if (loading) {
         return (
-            <div className="flex min-h-screen flex-col font-sans bg-[#FFFDF9]">
+            <div className="flex min-h-screen flex-col font-sans bg-zinc-900">
                 <Header />
                 <main className="flex-1 pt-20 flex items-center justify-center">
-                    <p className="text-stone-400 font-light">Loading...</p>
+                    <p className="text-zinc-500">Loading...</p>
                 </main>
                 <Footer />
             </div>
@@ -51,11 +50,11 @@ export default function JobDetailPage() {
 
     if (!job) {
         return (
-            <div className="flex min-h-screen flex-col font-sans bg-[#FFFDF9]">
+            <div className="flex min-h-screen flex-col font-sans bg-zinc-900">
                 <Header />
                 <main className="flex-1 pt-20 flex flex-col items-center justify-center">
-                    <h1 className="text-2xl font-medium text-stone-900 mb-4">Role not found</h1>
-                    <Link href="/careers" className="text-stone-500 hover:text-stone-900 transition-colors">
+                    <h1 className="text-2xl font-medium text-white mb-4">Role not found</h1>
+                    <Link href="/jobs" className="text-zinc-400 hover:text-white transition-colors">
                         ← Back to careers
                     </Link>
                 </main>
@@ -64,7 +63,6 @@ export default function JobDetailPage() {
         )
     }
 
-    // 문자열을 배열로 변환하는 헬퍼 함수
     const parseList = (data: string | string[] | undefined): string[] => {
         if (!data) return []
         if (Array.isArray(data)) return data
@@ -75,32 +73,32 @@ export default function JobDetailPage() {
     const requirements = parseList(job.requirements)
 
     return (
-        <div className="flex min-h-screen flex-col font-sans bg-[#FFFDF9]">
+        <div className="flex min-h-screen flex-col font-sans bg-zinc-900">
             <Header />
             <main className="flex-1 pt-20">
                 {/* Header */}
-                <section className="py-16 border-b border-stone-100">
+                <section className="py-16 border-b border-zinc-800/50">
                     <div className="container mx-auto px-6">
                         <Link
-                            href="/careers"
-                            className="inline-flex items-center gap-2 text-sm text-stone-400 hover:text-stone-900 mb-8 transition-colors"
+                            href="/jobs"
+                            className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-white mb-8 transition-colors"
                         >
                             <ArrowLeft size={16} />
                             Back to careers
                         </Link>
                         <div className="max-w-3xl">
-                            <div className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-3">
+                            <div className="text-xs font-medium text-violet-400 uppercase tracking-wider mb-3">
                                 {job.department}
                             </div>
-                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-stone-900 mb-6">
+                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
                                 {job.title}
                             </h1>
-                            <div className="flex flex-wrap items-center gap-4 text-stone-500 font-light">
+                            <div className="flex flex-wrap items-center gap-4 text-zinc-400">
                                 <div className="flex items-center gap-2">
                                     <MapPin size={16} />
                                     {job.location}
                                 </div>
-                                <div className="text-stone-300">•</div>
+                                <div className="text-zinc-600">•</div>
                                 <div>{job.type}</div>
                             </div>
                         </div>
@@ -115,10 +113,10 @@ export default function JobDetailPage() {
                             <div className="lg:col-span-2 space-y-12">
                                 {job.description && (
                                     <div>
-                                        <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                        <h2 className="text-xs font-medium text-blue-400 uppercase tracking-wider mb-4">
                                             About the role
                                         </h2>
-                                        <div className="text-stone-600 font-light leading-relaxed whitespace-pre-line">
+                                        <div className="text-zinc-300 leading-relaxed whitespace-pre-line">
                                             {job.description}
                                         </div>
                                     </div>
@@ -126,13 +124,13 @@ export default function JobDetailPage() {
 
                                 {responsibilities.length > 0 && (
                                     <div>
-                                        <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                        <h2 className="text-xs font-medium text-cyan-400 uppercase tracking-wider mb-4">
                                             What you'll do
                                         </h2>
                                         <ul className="space-y-3">
                                             {responsibilities.map((item: string, index: number) => (
-                                                <li key={index} className="flex items-start gap-3 text-stone-600 font-light">
-                                                    <span className="text-stone-300 mt-1">—</span>
+                                                <li key={index} className="flex items-start gap-3 text-zinc-300">
+                                                    <span className="text-zinc-600 mt-1">—</span>
                                                     <span>{item}</span>
                                                 </li>
                                             ))}
@@ -142,13 +140,13 @@ export default function JobDetailPage() {
 
                                 {requirements.length > 0 && (
                                     <div>
-                                        <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-4">
+                                        <h2 className="text-xs font-medium text-green-400 uppercase tracking-wider mb-4">
                                             What we're looking for
                                         </h2>
                                         <ul className="space-y-3">
                                             {requirements.map((item: string, index: number) => (
-                                                <li key={index} className="flex items-start gap-3 text-stone-600 font-light">
-                                                    <span className="text-stone-300 mt-1">—</span>
+                                                <li key={index} className="flex items-start gap-3 text-zinc-300">
+                                                    <span className="text-zinc-600 mt-1">—</span>
                                                     <span>{item}</span>
                                                 </li>
                                             ))}
@@ -159,20 +157,20 @@ export default function JobDetailPage() {
 
                             {/* Sidebar */}
                             <div className="lg:col-span-1">
-                                <div className="sticky top-28 bg-white border border-stone-100 rounded-2xl p-8">
-                                    <h3 className="text-lg font-medium text-stone-900 mb-3">
+                                <div className="sticky top-28 bg-zinc-800/50 border border-zinc-700 rounded-2xl p-8">
+                                    <h3 className="text-lg font-semibold text-white mb-3">
                                         Interested in this role?
                                     </h3>
-                                    <p className="text-sm text-stone-500 font-light mb-6 leading-relaxed">
+                                    <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
                                         We'd love to hear from you. Send us your application and let's start a conversation.
                                     </p>
                                     <button
                                         onClick={() => setIsApplyModalOpen(true)}
-                                        className="w-full py-4 bg-stone-900 text-white rounded-full font-medium hover:bg-stone-800 transition-colors"
+                                        className="w-full py-4 bg-white text-zinc-900 rounded-full font-medium hover:bg-zinc-100 transition-colors"
                                     >
                                         Apply now
                                     </button>
-                                    <p className="mt-4 text-xs text-center text-stone-400">
+                                    <p className="mt-4 text-xs text-center text-zinc-500">
                                         We'll review your application and get back to you soon.
                                     </p>
                                 </div>
@@ -192,4 +190,3 @@ export default function JobDetailPage() {
         </div>
     )
 }
-
