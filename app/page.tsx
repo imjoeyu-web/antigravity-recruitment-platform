@@ -44,13 +44,13 @@ const VALUES = [
 
 export default function Home() {
     return (
-        <div className="flex min-h-screen flex-col font-sans bg-zinc-950">
+        <div className="flex min-h-screen flex-col font-sans bg-zinc-900">
             <Header />
             <main className="flex-1">
                 <Hero />
 
                 {/* Featured Roles Section */}
-                <section className="py-32 bg-zinc-950 border-t border-zinc-800/50">
+                <section className="py-32 bg-zinc-900 border-t border-zinc-800/50">
                     <div className="container mx-auto px-6">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
                             <div>
@@ -162,7 +162,7 @@ export default function Home() {
                 </section>
 
                 {/* CTA Section */}
-                <section className="py-32 bg-zinc-950 border-t border-zinc-800/50">
+                <section className="py-32 bg-zinc-900 border-t border-zinc-800/50">
                     <div className="container mx-auto px-6">
                         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 p-12 md:p-20">
                             {/* Background pattern */}

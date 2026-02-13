@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
-import { Loader2, CheckCircle } from 'lucide-react'
+import { Loader2, CheckCircle, Mail, MapPin, Briefcase } from 'lucide-react'
 
 export default function ContactPage() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -36,141 +36,159 @@ export default function ContactPage() {
     }
 
     return (
-        <div className="flex min-h-screen flex-col font-sans bg-[#FFFDF9]">
+        <div className="flex min-h-screen flex-col font-sans bg-zinc-900">
             <Header />
             <main className="flex-1 pt-20">
                 {/* Hero */}
-                <section className="py-24 md:py-32">
+                <section className="py-20 border-b border-zinc-800/50">
                     <div className="container mx-auto px-6">
                         <div className="max-w-3xl">
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-stone-900 mb-8">
+                            <span className="inline-block text-sm font-medium text-violet-400 uppercase tracking-widest mb-4">
+                                Contact
+                            </span>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                                 Let's talk.
                             </h1>
-                            <p className="text-xl text-stone-600 font-light leading-relaxed max-w-2xl">
-                                Whether you're looking to redesign how your team works,
-                                or just want to say hello—we'd love to hear from you.
+                            <p className="text-xl text-zinc-400 leading-relaxed max-w-2xl">
+                                궁금한 점이 있거나 함께 이야기하고 싶다면
+                                언제든 연락주세요.
                             </p>
                         </div>
                     </div>
                 </section>
 
                 {/* Contact Info */}
-                <section className="py-24 border-t border-stone-100">
+                <section className="py-20">
                     <div className="container mx-auto px-6">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                             {/* Left - Contact Details */}
-                            <div className="space-y-12">
-                                <div>
-                                    <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-4">
-                                        Email
-                                    </h2>
-                                    <a
-                                        href="mailto:hello@goldenhours.com"
-                                        className="text-2xl text-stone-900 font-light hover:text-stone-600 transition-colors"
-                                    >
-                                        hello@goldenhours.com
-                                    </a>
+                            <div className="space-y-10">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-12 h-12 rounded-xl bg-violet-500/10 text-violet-400 flex items-center justify-center">
+                                        <Mail size={20} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-widest mb-2">
+                                            Email
+                                        </h2>
+                                        <a
+                                            href="mailto:hello@antigravity.kr"
+                                            className="text-xl text-white hover:text-violet-400 transition-colors"
+                                        >
+                                            hello@antigravity.kr
+                                        </a>
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-4">
-                                        For careers
-                                    </h2>
-                                    <a
-                                        href="mailto:careers@goldenhours.com"
-                                        className="text-2xl text-stone-900 font-light hover:text-stone-600 transition-colors"
-                                    >
-                                        careers@goldenhours.com
-                                    </a>
+                                <div className="flex items-start gap-4">
+                                    <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                                        <Briefcase size={20} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-widest mb-2">
+                                            For careers
+                                        </h2>
+                                        <a
+                                            href="mailto:careers@antigravity.kr"
+                                            className="text-xl text-white hover:text-blue-400 transition-colors"
+                                        >
+                                            careers@antigravity.kr
+                                        </a>
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-4">
-                                        Location
-                                    </h2>
-                                    <p className="text-lg text-stone-600 font-light leading-relaxed">
-                                        Seoul, South Korea<br />
-                                        Working with teams worldwide
-                                    </p>
+                                <div className="flex items-start gap-4">
+                                    <div className="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+                                        <MapPin size={20} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-widest mb-2">
+                                            Location
+                                        </h2>
+                                        <p className="text-lg text-zinc-300 leading-relaxed">
+                                            Seoul, South Korea<br />
+                                            <span className="text-zinc-500">Working with teams worldwide</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Right - Message Form */}
-                            <div className="bg-white p-8 md:p-12 rounded-2xl border border-stone-100">
+                            <div className="bg-zinc-900 p-8 md:p-10 rounded-2xl border border-zinc-800">
                                 {status === 'success' ? (
                                     <div className="text-center py-8 space-y-4">
-                                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-stone-100 text-stone-600 mb-2">
+                                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/10 text-green-400 mb-2">
                                             <CheckCircle size={32} />
                                         </div>
-                                        <h3 className="text-2xl font-medium text-stone-900">Message sent</h3>
-                                        <p className="text-stone-500 font-light leading-relaxed">
-                                            Thank you for reaching out. We'll get back to you soon.
+                                        <h3 className="text-2xl font-medium text-white">메시지가 전송되었습니다</h3>
+                                        <p className="text-zinc-400 leading-relaxed">
+                                            빠른 시일 내에 답변 드리겠습니다.
                                         </p>
                                         <button
                                             onClick={() => setStatus('idle')}
-                                            className="mt-4 text-stone-600 hover:text-stone-900 transition-colors"
+                                            className="mt-4 text-violet-400 hover:text-violet-300 transition-colors"
                                         >
-                                            Send another message
+                                            새 메시지 작성
                                         </button>
                                     </div>
                                 ) : (
                                     <>
-                                        <h2 className="text-xl font-medium text-stone-900 mb-8">
-                                            Send us a message
+                                        <h2 className="text-xl font-medium text-white mb-8">
+                                            메시지 보내기
                                         </h2>
                                         <form onSubmit={handleSubmit} className="space-y-6">
                                             <div>
-                                                <label className="block text-sm text-stone-600 mb-2">Name</label>
+                                                <label className="block text-sm text-zinc-400 mb-2">이름</label>
                                                 <input
                                                     required
                                                     type="text"
                                                     name="name"
                                                     value={formData.name}
                                                     onChange={handleChange}
-                                                    className="w-full px-4 py-3 bg-[#FFFDF9] border border-stone-200 rounded-lg text-stone-900 focus:outline-none focus:border-stone-400 transition-colors"
-                                                    placeholder="Your name"
+                                                    className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none focus:border-violet-500 transition-colors"
+                                                    placeholder="홍길동"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-sm text-stone-600 mb-2">Email</label>
+                                                <label className="block text-sm text-zinc-400 mb-2">이메일</label>
                                                 <input
                                                     required
                                                     type="email"
                                                     name="email"
                                                     value={formData.email}
                                                     onChange={handleChange}
-                                                    className="w-full px-4 py-3 bg-[#FFFDF9] border border-stone-200 rounded-lg text-stone-900 focus:outline-none focus:border-stone-400 transition-colors"
+                                                    className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none focus:border-violet-500 transition-colors"
                                                     placeholder="your@email.com"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-sm text-stone-600 mb-2">Message</label>
+                                                <label className="block text-sm text-zinc-400 mb-2">메시지</label>
                                                 <textarea
                                                     required
                                                     name="message"
                                                     value={formData.message}
                                                     onChange={handleChange}
                                                     rows={5}
-                                                    className="w-full px-4 py-3 bg-[#FFFDF9] border border-stone-200 rounded-lg text-stone-900 focus:outline-none focus:border-stone-400 transition-colors resize-none"
-                                                    placeholder="How can we help?"
+                                                    className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none focus:border-violet-500 transition-colors resize-none"
+                                                    placeholder="무엇을 도와드릴까요?"
                                                 />
                                             </div>
 
                                             {status === 'error' && (
-                                                <p className="text-sm text-red-600">Something went wrong. Please try again.</p>
+                                                <p className="text-sm text-red-400">오류가 발생했습니다. 다시 시도해주세요.</p>
                                             )}
 
                                             <button
                                                 type="submit"
                                                 disabled={status === 'submitting'}
-                                                className="w-full py-4 bg-stone-900 text-white rounded-full font-medium hover:bg-stone-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                                className="w-full py-4 bg-white text-zinc-900 rounded-full font-medium hover:bg-zinc-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                             >
                                                 {status === 'submitting' ? (
                                                     <>
                                                         <Loader2 className="animate-spin" size={18} />
-                                                        Sending...
+                                                        전송 중...
                                                     </>
-                                                ) : 'Send message'}
+                                                ) : '메시지 보내기'}
                                             </button>
                                         </form>
                                     </>
@@ -181,38 +199,38 @@ export default function ContactPage() {
                 </section>
 
                 {/* FAQ Teaser */}
-                <section className="py-32 border-t border-stone-100">
+                <section className="py-20 border-t border-zinc-800/50">
                     <div className="container mx-auto px-6">
-                        <div className="max-w-2xl">
-                            <h2 className="text-sm font-medium text-stone-400 uppercase tracking-widest mb-8">
-                                Common questions
-                            </h2>
+                        <div className="max-w-3xl">
+                            <span className="inline-block text-sm font-medium text-blue-400 uppercase tracking-widest mb-8">
+                                자주 묻는 질문
+                            </span>
                             <div className="space-y-8">
-                                <div>
-                                    <h3 className="text-lg font-medium text-stone-900 mb-2">
-                                        What kind of companies do you work with?
+                                <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800">
+                                    <h3 className="text-lg font-medium text-white mb-3">
+                                        어떤 회사와 협업하나요?
                                     </h3>
-                                    <p className="text-stone-500 font-light leading-relaxed">
-                                        We work with teams of all sizes—from startups to established organizations.
-                                        If you care about how your team works, we'd love to talk.
+                                    <p className="text-zinc-400 leading-relaxed">
+                                        스타트업부터 대기업까지 다양한 규모의 팀과 함께합니다.
+                                        팀의 일하는 방식을 개선하고 싶다면 언제든 연락주세요.
                                     </p>
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-medium text-stone-900 mb-2">
-                                        How does an engagement typically start?
+                                <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800">
+                                    <h3 className="text-lg font-medium text-white mb-3">
+                                        협업은 어떻게 시작되나요?
                                     </h3>
-                                    <p className="text-stone-500 font-light leading-relaxed">
-                                        We begin with a conversation to understand your needs.
-                                        From there, we'll propose a scope that makes sense for your situation.
+                                    <p className="text-zinc-400 leading-relaxed">
+                                        먼저 대화를 통해 필요한 것을 파악합니다.
+                                        이후 상황에 맞는 범위와 방식을 제안드립니다.
                                     </p>
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-medium text-stone-900 mb-2">
-                                        Do you work remotely?
+                                <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800">
+                                    <h3 className="text-lg font-medium text-white mb-3">
+                                        원격 근무가 가능한가요?
                                     </h3>
-                                    <p className="text-stone-500 font-light leading-relaxed">
-                                        Yes. We're based in Seoul but work with teams around the world.
-                                        We've designed our process to work beautifully across time zones.
+                                    <p className="text-zinc-400 leading-relaxed">
+                                        네, 서울에 기반을 두고 있지만 전 세계 팀과 협업합니다.
+                                        시간대를 넘어 원활하게 일할 수 있도록 프로세스를 설계했습니다.
                                     </p>
                                 </div>
                             </div>

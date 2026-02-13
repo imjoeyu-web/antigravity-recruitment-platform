@@ -8,7 +8,7 @@ const FOOTER_LINKS = {
     ],
     resources: [
         { href: '/contact', label: 'Contact' },
-        { href: 'mailto:hello@goldenhours.com', label: 'Email Us' },
+        { href: 'mailto:hello@antigravity.kr', label: 'Email Us' },
     ],
     social: [
         { href: '#', label: 'LinkedIn' },
@@ -19,20 +19,20 @@ const FOOTER_LINKS = {
 
 export function Footer() {
     return (
-        <footer className="bg-zinc-950 border-t border-zinc-800/50">
+        <footer className="bg-zinc-900 border-t border-zinc-800/50">
             <div className="container mx-auto px-6 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
                     {/* Brand */}
                     <div className="md:col-span-1">
                         <Link href="/" className="flex items-center gap-3 mb-6">
                             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center">
-                                <span className="text-white font-bold text-lg">G</span>
+                                <span className="text-white font-bold text-lg">A</span>
                             </div>
-                            <span className="text-lg font-semibold text-white">Golden Hours</span>
+                            <span className="text-lg font-semibold text-white">Antigravity</span>
                         </Link>
                         <p className="text-sm text-zinc-400 leading-relaxed mb-6">
-                            Designing work systems that help teams run better,
-                            creating calmer experiences for everyone.
+                            Defying gravity, opening new possibilities.
+                            We design the future of work together.
                         </p>
                         {/* Social icons */}
                         <div className="flex items-center gap-3">
@@ -118,7 +118,7 @@ export function Footer() {
                 {/* Bottom */}
                 <div className="mt-16 pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-sm text-zinc-500">
-                        © {new Date().getFullYear()} Golden Hours. All rights reserved.
+                        © {new Date().getFullYear()} Antigravity. All rights reserved.
                     </p>
                     <div className="flex items-center gap-6">
                         <Link href="#" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">

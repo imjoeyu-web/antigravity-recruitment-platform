@@ -37,12 +37,12 @@ export function Header() {
                 >
                     {/* Logo mark */}
                     <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-300">
-                        <span className="text-white font-bold text-lg">G</span>
+                        <span className="text-white font-bold text-lg">A</span>
                         <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     {/* Logo text */}
                     <span className="text-lg font-semibold tracking-tight text-white">
-                        Golden Hours
+                        Antigravity
                     </span>
                 </Link>
 

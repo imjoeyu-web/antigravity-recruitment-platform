@@ -11,7 +11,7 @@ export function Hero() {
     }, [])
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center bg-zinc-950 overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center bg-zinc-900 overflow-hidden">
             {/* Animated gradient background */}
             <div className="absolute inset-0 overflow-hidden">
                 {/* Main gradient orbs */}
@@ -37,7 +37,7 @@ export function Hero() {
                     {/* Badge */}
                     <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800/50 border border-zinc-700/50 mb-8 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                         <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                        <span className="text-sm text-zinc-400">We're hiring across all teams</span>
+                        <span className="text-sm text-zinc-400">모든 팀에서 채용 중</span>
                     </div>
 
                     {/* Main headline */}
@@ -51,8 +51,8 @@ export function Hero() {
 
                     {/* Subtitle */}
                     <p className={`text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-12 transition-all duration-700 delay-200 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                        We design systems that help teams work better.
-                        Clear, calm, and human-centered.
+                        팀이 더 잘 일할 수 있도록 시스템을 설계합니다.
+                        명확하고, 차분하며, 사람 중심으로.
                     </p>
 
                     {/* CTA Buttons */}
@@ -61,7 +61,7 @@ export function Hero() {
                             href="/jobs"
                             className="group relative h-14 px-8 bg-white text-zinc-900 rounded-full font-medium text-base flex items-center gap-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.2)]"
                         >
-                            <span>View open roles</span>
+                            <span>채용 공고 보기</span>
                             <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
@@ -70,7 +70,7 @@ export function Hero() {
                             href="/company"
                             className="h-14 px-8 bg-transparent text-white rounded-full font-medium text-base flex items-center gap-3 transition-all duration-300 border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600"
                         >
-                            <span>Learn about us</span>
+                            <span>회사 소개</span>
                         </Link>
                     </div>
 
